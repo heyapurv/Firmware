@@ -3,7 +3,7 @@
 # Slim Bootloader (SBL) – QEMU Build 
 
 
-In this doc, we will see how to build the slimbootloader step by step 
+Build Steps : 
 
 1. Update the system :
 
@@ -19,10 +19,10 @@ sudo apt install -y build-essential python3 git iasl nasm uuid-dev libssl-dev gc
 
 > **Why ?**
 
-* **iasl** - Compiles ACPI tables
-* **nasm** - Assembler for low-level firmware code
-* **gcc-multilib** - to change the bits - 32bit
-* **uuid-dev / libssl-dev** - Used for signing and security features
+* iasl - Compiles ACPI tables
+* nasm - Assembler for low-level firmware code
+* gcc-multilib - to change the bits - 32bit
+* uuid-dev / libssl-dev - Used for signing and security features
 
 ---
 
@@ -59,7 +59,7 @@ Export the key directory so the build system can find it:
 export SBL_KEY_DIR=$(pwd)/../SblKeys
 ```
 
-NOte : set this env variable everytime before build 
+N0te : set this env variable everytime before build 
 
 ---
 
@@ -95,9 +95,9 @@ python3 BuildLoader.py build qemu
 
 ---
 
-## Python Compatibility Fix (If any issue occured)
+## Python Compatibility issue Fix 
 
-Some systems require `python` to point to `python3`.
+Some system require `python` to point to `python3`.
 
 Install the compatibility package:
 
@@ -140,11 +140,11 @@ qemu-system-x86_64 \
 ![alt text](image.png)
 
 
-> **Explanation**
+> a*Explanation*
 
-* `-machine q35` → Modern Intel chipset emulation
-* `-pflash` → Loads firmware image into flash memory
-* `-nographic` → Runs in terminal (no GUI)
+* `-machine q35` - Modern Intel chipset 
+* `-pflash` - Loads firmware image into flash memory
+* `-nographic` - Runs in terminal 
 
 ---
 
