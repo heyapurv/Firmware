@@ -1,9 +1,7 @@
 
 ---
 
-## Part 1: Compile GRUB 2 from Source
-
-Run these commands from the root of your cloned `grub` directory.
+## Part 1: GRUB BUILD DOCS
 
 ### 1. Install Dependencies
 
@@ -12,8 +10,13 @@ sudo apt update
 sudo apt install -y git build-essential bison flex autoconf automake python3 libtool gettext libfreetype6-dev pkg-config mtools
 
 ```
+### 2. Clone source code from github 
+```bash
+git clone https://git.savannah.gnu.org/git/grub.git
+cd grub
+```
 
-### 2. Configure for UEFI x86_64
+### 3. Configure for UEFI x86_64
 
 ```bash
 ./bootstrap
@@ -31,13 +34,13 @@ make
 
 ---
 
-## Part 2: Generate the Standalone EFI Binary
+## Part 2: Generate EFI Binary
 
-This packages all necessary GRUB modules into one file. **Ensure your `vmlinuz` and `initrd.img` are already in this folder.**
+ make sure `vmlinuz` and `initrd.img` are already in this folder.
 
 ### 1. Create a basic `grub.cfg`
 
-If you haven't yet, create the configuration file in this directory:
+
 
 ```bash
 cat <<EOF > grub.cfg
@@ -54,7 +57,7 @@ EOF
 
 ### 2. Run `grub-mkstandalone`
 
-Use the `-d` flag to point specifically to the `grub-core` directory you just built.
+Use the `-d` flag to point to the `grub-core` directory that we just built.
 
 ```bash
 ./grub-mkstandalone \
@@ -69,15 +72,13 @@ Use the `-d` flag to point specifically to the `grub-core` directory you just bu
 
 ## Create the Bootable FAT32 Disk Image
 
-
-
 ### 1. Create the Raw Image
 
 ```bash
 
 dd if=/dev/zero of=fat_disk.img bs=1M count=200
 
-# Format as FAT32
+# fat32 format
 mkfs.vfat -F 32 fat_disk.img
 
 ```
@@ -97,10 +98,10 @@ mmd -i fat_disk.img ::/EFI/BOOT
 Copy the bootloader, kernel, and RAM disk from the current folder into the image.
 
 ```bash
-#  Bootloader
+#  this is bootloader
 mcopy -i fat_disk.img bootx64.efi ::/EFI/BOOT/BOOTX64.EFI
 
-#   Kernel and RAM Disk
+#  these are Kernel and RAM Disk
 mcopy -i fat_disk.img vmlinuz ::/vmlinuz
 mcopy -i fat_disk.img initrd.img ::/initrd.img
 
