@@ -78,22 +78,7 @@ Outputs/qemu/SlimBootloader.bin
 
 ---
 
-## Clean the build  (Optional)
 
-If you face build issues or want a clean rebuild:
-
-```bash
-python3 BuildLoader.py clean
-```
-
-Then rebuild:
-
-```bash
-export SBL_KEY_DIR=$(pwd)/../SblKeys
-python3 BuildLoader.py build qemu
-```
-
----
 
 ## Python Compatibility issue Fix 
 
